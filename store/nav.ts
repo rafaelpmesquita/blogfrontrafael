@@ -14,10 +14,10 @@ export default class nav extends VuexModule {
     private SET_ALL_NAVBAR(navs: Nav[]) {
         this.navs = navs
     }
+
     @Action({ rawError: true })
     public async getNav() {
-        const navs = await $axios.$get('api/nv')
+        const navs = await $axios.$get('/api/v1/nv')
         this.context.commit('SET_ALL_NAVBAR', navs)
     }
-    
 }
