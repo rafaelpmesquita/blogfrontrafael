@@ -1,58 +1,50 @@
+const apiTarget = process.env.API_BASE_URL || 'http://localhost:5000/'
+
 export default {
-  
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Blog Rafael',
+    title: 'Rafael Mesquita | Desenvolvedor Backend',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'pt-BR'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Portfólio de Rafael Mesquita, desenvolvedor backend com foco em C#, .NET, APIs, AWS e sistemas distribuídos.'
+      },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '@assets/css/global.css'
-  ],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-     '@/plugins/accessor'
-  ],
+  css: ['@assets/css/global.css'],
+  plugins: ['@/plugins/accessor'],
+  components: [{ path: '@/components', pathPrefix: false }],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: [{path:'@/components',pathPrefix: false}],
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build','@nuxtjs/tailwindcss'
+    '@nuxt/typescript-build',
+    '@nuxtjs/tailwindcss'
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  },
 
   axios: {
     proxy: true
   },
-  proxy: {
-    '/api/': { target: 'https://apirestrafaelblog.azurewebsites.net/' ,pathRewrite: { "^/api/": "" }},
 
+  // API_BASE_URL must be the API origin, without /v1.
+  // Calls under /api/* are forwarded after removing the /api prefix.
+  proxy: {
+    '/api/': {
+      target: apiTarget,
+      pathRewrite: { '^/api/': '' }
+    }
   }
 }
